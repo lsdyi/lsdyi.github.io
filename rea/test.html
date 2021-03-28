@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    class TodoApp extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          inputValue: '',
+          lists: [],
+          matrix: []
+        }
+
+        for (let i = 0; i < 10; i++) {
+          this.state.matrix.push([])
+          for (let j = 0; j < 10; j++) {
+            this.state.matrix[i][j] = 0
+          }
+        }
+        console.log(this)
+      }
+
+      render() {
+        return (
+          <div>
+            <input onChange={this.handleChange.bind(this)} value={this.state.inputValue}
+              placeholder="请输入待办事项" />
+            <button onClick={this.handleClick.bind(this)}>add</button>
+            <ul>
+              {this.state.lists.map((item, index) => {
+                return <li key={index}>{item}<button onClick={this.handleClick2.bind(this, index)}>删除</button></li>
+              })}
+            </ul>
+          </div>
+        )
+      }
+
+      handleChange(e) {
+        this.setState({ inputValue: e.target.value })
+      }
+
+      handleClick(e) {
+        if (this.state.inputValue === '') return
+        this.setState((state) => ({
+          lists: state.lists.concat(state.inputValue),
+          inputValue: ""
+        }))
+      }
+
+      handleClick2(index) {
+        this.state.lists.splice(index, 1);
+        this.setState(state => ({
+          lists: state.lists
+        }))
+      }
+    }
+
+
+
+    ReactDOM.render(<TodoApp />, document.querySelector('#app'))
+
+  </script>
+</body>
+
+</html>

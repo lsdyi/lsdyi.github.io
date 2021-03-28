@@ -1,0 +1,175 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url(./4830017.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  /* top: 10px;
+  right: 20px; */
+}
+
+header {
+  display: flex;
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+  justify-content: space-around;
+}
+
+section {
+  cursor: pointer;
+  /* box-sizing: content-box; */
+
+  padding: 5px;
+}
+
+section > a:hover {
+  background-color: #409eff;
+  color: white;
+  /* 设了border页面会抖 恶心 */
+  /* border: 1px solid gray;
+  border-radius: 3px; */
+}
+
+span {
+  cursor: pointer;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  margin: 11px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid grey; */
+  position: relative;
+}
+
+/*  */
+span::before {
+  content: ''; /*CSS伪类用法*/
+  position: absolute; /*定位背景横线的位置*/
+  /* top: 52%; */
+  /* left: 0; */
+  background: #000; /*宽和高做出来的背景横线*/
+  width: 250%;
+  height: 1px;
+}
+
+span::after {
+  content: '';
+  width: 1px;
+  height: 250%;
+  position: absolute;
+  left: 50%;
+  background: #000;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  color: white;
+  font-size: 30px;
+}
+
+.border {
+  border: solid 1px grey;
+
+  background-color: palegoldenrod;
+  padding: 10px;
+  box-shadow: 0 0 10px;
+  /* height: 100vh; */
+}
+
+.white {
+  background: whitesmoke;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.black {
+  background: black;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+button {
+  border: none;
+  display: block;
+  background: #409eff;
+  padding: 10px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  width: 150px;
+  font-size: 18px;
+  color: white;
+}
+
+button:hover {
+  background-color: #67c23a;
+}
+
+ul {
+  position: absolute;
+  list-style: none;
+  left: 40%;
+  top: 40%;
+  height: 300px;
+  background-color: #aaa;
+  width: 200px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  align-items: center;
+  z-index: 200;
+}
+
+li:hover {
+  background-color: #f56c6c;
+}
+
+/* 
+    可以不设成show 不设成show默认会去找原来的在hidden之前的样式嘛 挺好的
+*/
+/* .show {
+  display: inline-block;
+} */
+
+.hidden {
+  display: none;
+}
+
+.hidden2 {
+  visibility: hidden;
+}
+
+.canvasboard {
+  width: 520px;
+  height: 520px;
+}
