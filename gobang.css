@@ -173,3 +173,8 @@ li:hover {
   width: 520px;
   height: 520px;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}

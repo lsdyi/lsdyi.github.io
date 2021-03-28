@@ -9,7 +9,7 @@ class MyHeader extends React.Component {
     return (
       <header>
         <section>
-          <a>仓库地址</a>
+          <a href='https://github.com/lsdyi/lsdyi.github.io'>仓库地址</a>
         </section>
         <section>
           <a onClick={this.modeChoose.bind(this, 4)}>模式选择</a>
