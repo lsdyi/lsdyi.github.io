@@ -1,0 +1,32 @@
+button.choose {
+  width: 100px;
+  display: inline-block;
+  margin: 20px 0;
+  border: 0px;
+  border-radius: 0;
+  color: black;
+  font-size: 25px;
+  outline: none;
+  background-color: none;
+}
+
+.choosebuttons {
+  display: flex;
+  justify-content: center;
+}
+
+.beenchosen {
+  background-color: #e6a23c;
+  box-shadow: 0 0 10px black;
+
+  /* color: red; */
+}
+
+button.choose:hover {
+  cursor: pointer;
+  outline: 1px solid pink;
+}
+
+.mycanvas {
+  cursor: pointer;
+}

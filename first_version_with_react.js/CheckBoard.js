@@ -1,3 +1,5 @@
+// let showCanvas = false;
+// let matrix;
 class Checkboard extends React.Component {
   // n是棋局的长宽大小
   constructor(props) {
@@ -29,6 +31,9 @@ class Checkboard extends React.Component {
 
       socres: this.scores,
     };
+
+    // matrix = this.state.matrix;
+    // console.log(matrix);
   }
 
   render() {
@@ -49,7 +54,16 @@ class Checkboard extends React.Component {
         <div className={this.props.clickedMode == 3 ? 'hidden2' : ''}>
           <div className='border'>
             {this.state.matrix.map((item, index) => {
-              return <div key={index}>{this.help(item, index)}</div>;
+              return (
+                <div
+                  className={`row ${
+                    index === this.state.matrix.length - 1 ? 'lastrow' : ''
+                  }`}
+                  key={index}
+                >
+                  {this.help(item, index)}
+                </div>
+              );
             })}
           </div>
         </div>
@@ -547,3 +561,4 @@ class Checkboard extends React.Component {
     this.setCheckStatus(goalx, goaly, 1);
   }
 }
+// console.log(matrix);
