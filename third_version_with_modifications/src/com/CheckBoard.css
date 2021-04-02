@@ -1,0 +1,78 @@
+button.choose {
+  width: 100px;
+  display: inline-block;
+  margin: 20px 0;
+  border: 0px;
+  border-radius: 0;
+  color: black;
+  font-size: 25px;
+  outline: none;
+  background-color: none;
+}
+
+.choosebuttons {
+  display: flex;
+  justify-content: center;
+}
+
+.beenchosen {
+  background-color: #e6a23c;
+  box-shadow: 0 0 10px black;
+
+  /* color: red; */
+}
+
+button.choose:hover {
+  cursor: pointer;
+  outline: 1px solid pink;
+}
+
+.mycanvas {
+  cursor: pointer;
+}
+
+.rec {
+  position: relative;
+  height: 52px;
+  width: 52px;
+  display: inline-block;
+  border-left: solid 2px black;
+  border-top: solid 2px black;
+
+  box-sizing: border-box;
+}
+
+.recrow {
+  height: 52px;
+  display: inline-block;
+}
+.recrow > .rec:nth-of-type(9) {
+  width: 54.5px;
+  border-right: solid 2px black;
+}
+
+.recrow:last-child > .rec {
+  border-bottom: solid 2px black;
+  height: 54px;
+}
+.dom {
+  width: 522px;
+  height: 522px;
+  padding-left: 23px;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.dot {
+  border-radius: 50%;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -15px;
+  left: -15px;
+}
+
+.enough {
+  display: inline-block;
+  position: relative;
+}
