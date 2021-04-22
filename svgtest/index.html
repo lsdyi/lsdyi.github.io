@@ -56,11 +56,26 @@
         const chi = svg.childNodes;
         for (let i = 0; i < chi.length; i++) {
           // console.log(chi[i]);
-          if (chi[i].tagName != 'g') {
+          if (chi[i].tagName != 'g' && chi[i].tagName != 'defs') {
             if (chi[i].tagName == 'style') {
               // 找到的一个bug
               chi[i].innerHTML = chi[i].innerHTML.replace(
+                /fill:black/g,
+                'fill:red'
+              );
+
+              chi[i].innerHTML = chi[i].innerHTML.replace(
+                /fill:#000000/g,
+                'fill:red'
+              );
+
+              chi[i].innerHTML = chi[i].innerHTML.replace(
                 /stroke:#000000/g,
+                'stroke:red'
+              );
+
+              chi[i].innerHTML = chi[i].innerHTML.replace(
+                /stroke:#black/g,
                 'stroke:red'
               );
             }
