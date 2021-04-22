@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form action="" enctype="multipart/form-data">
+      <input
+        id="file"
+        class="filepath"
+        onchange="changepic(this)"
+        type="file"
+      /><br />
+    </form>
+
+    <script>
+      function changepic(obj) {
+        const form = document.querySelector('form');
+
+        // 把上传的svg先显示出来
+        const svgurl = getObjectURL(obj.files[0]);
+        const img = document.createElement('img');
+        img.src = svgurl;
+        img.style.width = '200px';
+        form.append(img);
+
+        // 开始处理svg
+        const svgprocessed = document.createElement('embed');
+        svgprocessed.src = svgurl;
+        svgprocessed.setAttribute('class', 'processed');
+        svgprocessed.style.width = '200px';
+        svgprocessed.style.visibility = 'hidden';
+
+        form.append(svgprocessed);
+        let svgdocument = svgprocessed.getSVGDocument();
+        // console.log(svgdocument);
+        if (!svgdocument) {
+          // 表示这时候还没加载好呢
+          // console.log('dsad');
+
+          setTimeout(() => {
+            svgdocument = svgprocessed.getSVGDocument();
+            const svg = svgdocument.childNodes[0];
+            console.log(svg);
+            dye(svg);
+            svgprocessed.style.visibility = 'visible';
+          }, 3000);
+        }
+      }
+
+      // 给黑色区域染色的函数
+      function dye(svg) {
+        const chi = svg.childNodes;
+        for (let i = 0; i < chi.length; i++) {
+          console.log(chi[i]);
+          if (chi[i].tagName != 'g') {
+            if (chi[i].getAttribute('stroke') === '#000000') {
+              // 该块区域是用线条完成的
+              chi[i].setAttribute('stroke', 'red');
+            } else {
+              //该快区域是用填充完成的
+              const fill = chi[i].getAttribute('fill');
+              if (!fill || fill === '#000000') {
+                chi[i].setAttribute('fill', 'red');
+              }
+            }
+          } else {
+            // 是根元素的话 递归对这个根元素进行染色
+            dye(chi[i]);
+          }
+        }
+      }
+
+      // 获得上传的文件的url
+      function getObjectURL(file) {
+        var url = null;
+
+        // 下面函数执行的效果是一样的，只是需要针对不同的浏览器执行不同的 js 函数而已
+
+        if (window.createObjectURL != undefined) {
+          // basic
+
+          url = window.createObjectURL(file);
+        } else if (window.URL != undefined) {
+          // mozilla(firefox)
+          url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+          // webkit or chrome
+
+          url = window.webkitURL.createObjectURL(file);
+        }
+
+        return url;
+      }
+    </script>
+    <script></script>
+  </body>
+</html>
