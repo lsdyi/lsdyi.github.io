@@ -65,7 +65,11 @@
         for (let i = 0; i < chi.length; i++) {
           // console.log(chi[i]);
           try {
-            if (chi[i].tagName != 'g' && chi[i].tagName != 'defs') {
+            if (
+              chi[i].tagName != 'g' &&
+              chi[i].tagName != 'defs' &&
+              chi[i].tagName != 'switch'
+            ) {
               // console.log(chi[i]);
               if (chi[i].tagName == 'style') {
                 // 找到的一个bug
@@ -75,12 +79,12 @@
                 );
 
                 chi[i].innerHTML = chi[i].innerHTML.replace(
-                  /fill:#000000/g,
+                  /fill:#0{3,6}/g,
                   'fill:red'
                 );
 
                 chi[i].innerHTML = chi[i].innerHTML.replace(
-                  /stroke:#000000/g,
+                  /stroke:#0{3,6}/g,
                   'stroke:red'
                 );
 
@@ -95,6 +99,7 @@
               } else {
                 //该快区域是用填充完成的
                 const fill = chi[i].getAttribute('fill');
+                console.log(chi[i], fill);
                 if (!fill || fill === '#000000') {
                   chi[i].setAttribute('fill', 'red');
                 }
