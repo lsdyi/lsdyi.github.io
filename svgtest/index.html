@@ -32,7 +32,7 @@
         svgprocessed.src = svgurl;
         svgprocessed.setAttribute('class', 'processed');
         svgprocessed.style.width = '200px';
-        svgprocessed.style.visibility = 'hidden';
+        // svgprocessed.style.visibility = 'hidden';
 
         form.append(svgprocessed);
         let svgdocument = svgprocessed.getSVGDocument();
@@ -44,55 +44,85 @@
           setTimeout(() => {
             svgdocument = svgprocessed.getSVGDocument();
             const svg = svgdocument.childNodes[0];
-            console.log(svg);
+            // console.log(svg);
             dye(svg);
-            svgprocessed.style.visibility = 'visible';
-          }, 3000);
+            // svgprocessed.style.visibility = 'visible';
+          }, 1000);
+
+          // Promise.resolve().then(() => {
+          //   svgdocument = svgprocessed.getSVGDocument();
+          //   const svg = svgdocument.childNodes[0];
+          //   console.log(svg);
+          //   dye(svg);
+          // });
         }
       }
 
       // 给黑色区域染色的函数
       function dye(svg) {
-        const chi = svg.childNodes;
+        const chi = svg.children;
+        // console.log(chi);
         for (let i = 0; i < chi.length; i++) {
           // console.log(chi[i]);
-          if (chi[i].tagName != 'g' && chi[i].tagName != 'defs') {
-            if (chi[i].tagName == 'style') {
-              // 找到的一个bug
-              chi[i].innerHTML = chi[i].innerHTML.replace(
-                /fill:black/g,
-                'fill:red'
-              );
+          try {
+            if (chi[i].tagName != 'g' && chi[i].tagName != 'defs') {
+              // console.log(chi[i]);
+              if (chi[i].tagName == 'style') {
+                // 找到的一个bug
+                chi[i].innerHTML = chi[i].innerHTML.replace(
+                  /fill:black/g,
+                  'fill:red'
+                );
 
-              chi[i].innerHTML = chi[i].innerHTML.replace(
-                /fill:#000000/g,
-                'fill:red'
-              );
+                chi[i].innerHTML = chi[i].innerHTML.replace(
+                  /fill:#000000/g,
+                  'fill:red'
+                );
 
-              chi[i].innerHTML = chi[i].innerHTML.replace(
-                /stroke:#000000/g,
-                'stroke:red'
-              );
+                chi[i].innerHTML = chi[i].innerHTML.replace(
+                  /stroke:#000000/g,
+                  'stroke:red'
+                );
 
-              chi[i].innerHTML = chi[i].innerHTML.replace(
-                /stroke:#black/g,
-                'stroke:red'
-              );
-            }
-            if (chi[i].getAttribute('stroke') === '#000000') {
-              // 该块区域是用线条完成的
-              chi[i].setAttribute('stroke', 'red');
-            } else {
-              //该快区域是用填充完成的
-              const fill = chi[i].getAttribute('fill');
-              if (!fill || fill === '#000000') {
-                chi[i].setAttribute('fill', 'red');
+                chi[i].innerHTML = chi[i].innerHTML.replace(
+                  /stroke:#black/g,
+                  'stroke:red'
+                );
               }
+              if (chi[i].getAttribute('stroke') === '#000000') {
+                // 该块区域是用线条完成的
+                chi[i].setAttribute('stroke', 'red');
+              } else {
+                //该快区域是用填充完成的
+                const fill = chi[i].getAttribute('fill');
+                if (!fill || fill === '#000000') {
+                  chi[i].setAttribute('fill', 'red');
+                }
+              }
+              // console.log(chi[i].style);
+              // console.log('fill' in chi[i].style, chi[i].style.fill);
+              // 针对标签还写了内联的style属性的情况
+              if (
+                'fill' in chi[i].style &&
+                (chi[i].style.fill == 'rgb(0, 0, 0)' ||
+                  chi[i].style.fill == 'black')
+              ) {
+                // console.warn('dasdsa');
+                chi[i].style.fill = 'red';
+              }
+
+              if (
+                'stroke' in chi[i].style &&
+                (chi[i].style.stroke == 'rgb(0, 0, 0)' ||
+                  chi[i].style.stroke == 'black')
+              ) {
+                chi[i].style.stroke = 'red';
+              }
+            } else {
+              // 是根元素的话 递归对这个根元素进行染色
+              dye(chi[i]);
             }
-          } else {
-            // 是根元素的话 递归对这个根元素进行染色
-            dye(chi[i]);
-          }
+          } catch (e) {}
         }
       }
 
