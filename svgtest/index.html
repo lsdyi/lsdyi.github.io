@@ -29,7 +29,7 @@
 
         // 把上传的svg先显示出来
         const svgurl = getObjectURL(obj.files[i]);
-        console.log(obj, obj.files);
+        // console.log(obj, obj.files);
         const img = document.createElement('img');
         img.src = svgurl;
         img.style.width = '200px';
@@ -45,35 +45,28 @@
         // svgprocessed.style.visibility = 'hidden';
 
         form.append(svgprocessed);
-        let svgdocument = svgprocessed.getSVGDocument();
-        // console.log(svgdocument);
-        if (!svgdocument) {
-          // 表示这时候还没加载好呢
-          // console.log('dsad');
 
-          setTimeout(() => {
-            svgdocument = svgprocessed.getSVGDocument();
+        svgprocessed.addEventListener('load', () => {
+          let svgdocument = svgprocessed.getSVGDocument();
 
-            // 解决svg文件第一行有doctype的问题
-            // 确保获得真正的svg元素
-            let i = 0;
-            let svg = svgdocument.childNodes[i];
-            while (!svg.tagName) {
-              i++;
-              svg = svgdocument.childNodes[i];
-            }
-            // console.log(svg);
-            dye(svg);
-            // svgprocessed.style.visibility = 'visible';
-          }, 1000);
+          // 解决svg文件第一行有doctype的问题
+          // 确保获得真正的svg元素
+          let i = 0;
+          let svg = svgdocument.childNodes[i];
+          while (!svg.tagName) {
+            i++;
+            svg = svgdocument.childNodes[i];
+          }
+          // console.log(svg);
+          dye(svg);
+        });
 
-          // Promise.resolve().then(() => {
-          //   svgdocument = svgprocessed.getSVGDocument();
-          //   const svg = svgdocument.childNodes[0];
-          //   console.log(svg);
-          //   dye(svg);
-          // });
-        }
+        // Promise.resolve().then(() => {
+        //   svgdocument = svgprocessed.getSVGDocument();
+        //   const svg = svgdocument.childNodes[0];
+        //   console.log(svg);
+        //   dye(svg);
+        // });
       }
 
       // 给黑色区域染色的函数
