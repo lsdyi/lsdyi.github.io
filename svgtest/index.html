@@ -11,20 +11,29 @@
       <input
         id="file"
         class="filepath"
-        onchange="changepic(this)"
+        onchange="upload(this)"
         type="file"
+        multiple="multiple"
       /><br />
     </form>
 
     <script>
-      function changepic(obj) {
+      function upload(obj) {
+        for (let i = 0; i < obj.files.length; i++) {
+          changepic(obj, i);
+        }
+      }
+      function changepic(obj, i) {
         const form = document.querySelector('form');
 
         // 把上传的svg先显示出来
-        const svgurl = getObjectURL(obj.files[0]);
+        const svgurl = getObjectURL(obj.files[i]);
+        console.log(obj, obj.files);
         const img = document.createElement('img');
         img.src = svgurl;
         img.style.width = '200px';
+        img.title = obj.files[i].name;
+        // console.dir(obj.files);
         form.append(img);
 
         // 开始处理svg
@@ -43,7 +52,15 @@
 
           setTimeout(() => {
             svgdocument = svgprocessed.getSVGDocument();
-            const svg = svgdocument.childNodes[0];
+
+            // 解决svg文件第一行有doctype的问题
+            // 确保获得真正的svg元素
+            let i = 0;
+            let svg = svgdocument.childNodes[i];
+            while (!svg.tagName) {
+              i++;
+              svg = svgdocument.childNodes[i];
+            }
             // console.log(svg);
             dye(svg);
             // svgprocessed.style.visibility = 'visible';
@@ -61,7 +78,7 @@
       // 给黑色区域染色的函数
       function dye(svg) {
         const chi = svg.children;
-        // console.log(chi);
+        // console.dir(svg, chi);
         for (let i = 0; i < chi.length; i++) {
           // console.log(chi[i]);
           try {
@@ -93,17 +110,29 @@
                   'stroke:red'
                 );
               }
-              if (chi[i].getAttribute('stroke') === '#000000') {
+
+              const stroke = chi[i].getAttribute('stroke');
+              if (
+                stroke === '#000000' ||
+                stroke === '#000' ||
+                stroke === 'black'
+              ) {
                 // 该块区域是用线条完成的
                 chi[i].setAttribute('stroke', 'red');
-              } else {
-                //该快区域是用填充完成的
-                const fill = chi[i].getAttribute('fill');
-                console.log(chi[i], fill);
-                if (!fill || fill === '#000000') {
-                  chi[i].setAttribute('fill', 'red');
-                }
               }
+              // if {
+              //该快区域是用填充完成的
+              const fill = chi[i].getAttribute('fill');
+              // console.log(chi[i], fill);
+              if (
+                !fill ||
+                fill === '#000000' ||
+                fill === '#000' ||
+                fill === 'black'
+              ) {
+                chi[i].setAttribute('fill', 'red');
+              }
+              // }
               // console.log(chi[i].style);
               // console.log('fill' in chi[i].style, chi[i].style.fill);
               // 针对标签还写了内联的style属性的情况
